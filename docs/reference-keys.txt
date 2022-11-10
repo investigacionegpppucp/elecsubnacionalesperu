@@ -1,3 +1,15 @@
 presentación
-mito-1
-mito-2
+mito-1-el-porcentaje-de-participación-electoral-ha-disminuído.
+mito-2-el-porcentaje-del-voto-no-válido-supera-al-voto-de-la-organización-política-ganadora.
+elecciones-regionales
+porcentaje-de-votos-no-válidos-por-cada-región
+porcentaje-de-votos-no-válidos-versus-porcentaje-de-votos-por-la-organización-política-ganadora-en-las-elecciones-regionales
+elecciones-provinciales
+porcentaje-de-votos-no-válidos-versus-porcentaje-de-votos-por-la-organización-política-ganadora-en-las-elecciones-provinciales
+elecciones-distritales
+mito-3-los-movimientos-regionales-predominan-en-las-elecciones-subnacionales
+elecciones-regionales-1
+porcentaje-de-movimientos-regionales-participantes-en-cada-elección
+porcentaje-de-movimientos-regionales-que-ganaron-las-elección
+elecciones-provinciales-1
+elecciones-distritales-1

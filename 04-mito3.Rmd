@@ -1,0 +1,97 @@
+# Mito 3: Los movimientos regionales predominan en las elecciones subnacionales
+
+
+## Elecciones Regionales
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+library(googlesheets4)
+library(dplyr)
+library(ggplot2)
+regional=read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRJdUE26KIgGmrUT8DEUzY5f3JsGlK0-eQdoTeWQw2SPrGpA_bI54jpSDnyE-hBBAoIsBRiAJzoghy-/pub?gid=2080689295&single=true&output=csv", dec = ",")
+
+colnames(regional)[4]="Por_Participacion"
+colnames(regional)[10]="Por_votos"
+
+regional$Por_votos=as.numeric(regional$Por_votos)
+
+regional$Tipo.Organización.Política[regional$Tipo.Organización.Política=="MOVIMIENTO REGIONAL " ]= "MOVIMIENTO REGIONAL"
+
+regional$Tipo.Organización.Política= as.factor(regional$Tipo.Organización.Política)
+regional$Elección= as.factor(regional$Elección)
+```
+
+
+## Porcentaje de movimientos regionales participantes en cada elección
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+porcentaje_participantes_regional=regional%>% 
+  filter(Vuelta=="Primera")%>%
+  filter(Elección=="Regional 2002"|Elección=="Regional 2006"|Elección=="Regional 2010"|Elección=="Regional 2014"|Elección=="Regional 2018"|Elección=="Regional 2022")%>% 
+  filter(Tipo.Organización.Política=="ALIANZA ELECTORAL"|Tipo.Organización.Política=="MOVIMIENTO REGIONAL"|Tipo.Organización.Política=="PARTIDO POLÍTICO")  %>% 
+  select(Procedencia,Organización.Política,Tipo.Organización.Política,Votos, Por_votos,Elección)%>% 
+  group_by(Procedencia, Elección, Tipo.Organización.Política)%>% 
+  count(Tipo.Organización.Política) %>%
+  group_by(Procedencia, Elección) %>%
+  mutate(Suma.total.organizaciones = sum(n)) %>% 
+  group_by(Procedencia, Elección, Tipo.Organización.Política) %>% 
+  mutate(División = n/Suma.total.organizaciones,
+        Porcentaje.Organización.Política = División*100 %>% round(2)) %>%
+  select(Procedencia,Tipo.Organización.Política,Porcentaje.Organización.Política, Elección) 
+```
+
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+library(ggplot2)
+ggplot(subset(porcentaje_participantes_regional), aes(x=Elección, y=Porcentaje.Organización.Política, group=Tipo.Organización.Política, color=Tipo.Organización.Política)) +geom_line()+
+  facet_wrap(~ Procedencia)
+```
+
+
+# Porcentaje de movimientos regionales que ganaron las elección
+
+
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+primera_porcentaje_ganadores_regional=regional%>% 
+  filter(Vuelta=="Primera")%>%
+  filter(Elección=="Regional 2002"|Elección=="Regional 2006"|Elección=="Regional 2010"|Elección=="Regional 2014"|Elección=="Regional 2018"|Elección=="Regional 2022")%>%
+  filter(Organización.Política!="VOTOS NULOS"& Organización.Política!="VOTOS EN BLANCO")%>% 
+  select(Procedencia,Organización.Política,Tipo.Organización.Política,Votos, Por_votos,Elección)%>% 
+  group_by(Procedencia, Elección) %>%
+  filter(Por_votos == max(Por_votos)) %>%
+  arrange(Procedencia, Elección)
+```
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+segunda_porcentaje_ganadores_regional=regional%>% 
+  filter(Vuelta=="Segunda")%>%
+  filter(Elección=="Regional 2002"|Elección=="Regional 2006"|Elección=="Regional 2010"|Elección=="Regional 2014"|Elección=="Regional 2018"|Elección=="Regional 2022")%>%
+  filter(Organización.Política!="VOTOS NULOS"& Organización.Política!="VOTOS EN BLANCO")%>% 
+  select(Procedencia,Organización.Política,Tipo.Organización.Política,Votos, Por_votos,Elección)%>% 
+  group_by(Procedencia, Elección) %>%
+  filter(Por_votos == max(Por_votos))
+```
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+ganadores = rbind(primera_porcentaje_ganadores_regional, segunda_porcentaje_ganadores_regional) %>% 
+  group_by(Procedencia, Elección) %>%
+  filter(Por_votos == max(Por_votos)) %>%
+  arrange(Procedencia, Elección)
+```
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+prop.table(table(ganadores$Elección, ganadores$Tipo.Organización.Política),1)*100
+```
+
+
+
+## Elecciones Provinciales
+
+
+## Elecciones Distritales

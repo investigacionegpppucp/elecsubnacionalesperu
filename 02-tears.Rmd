@@ -1,2 +1,35 @@
-# Mito 1
+# Mito 1: El porcentaje de participación electoral ha disminuído.
+
+
+Se observa que la participación electoral ha disminuído a partir de las Elecciones Regionales y Municipales del 2010. En el 2022, se registró el porcentaje más bajo de participación electoral.
+
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+library(googlesheets)
+regional=read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRJdUE26KIgGmrUT8DEUzY5f3JsGlK0-eQdoTeWQw2SPrGpA_bI54jpSDnyE-hBBAoIsBRiAJzoghy-/pub?gid=2080689295&single=true&output=csv")
+colnames(regional)[4]="Por_Participacion"
+colnames(regional)[10]="Por_votos"
+
+library(dplyr)
+regional_primera=filter(regional,Vuelta=="Primera") # Filtrado primera vuelta
+regional_primera_v1=select(regional_primera,Procedencia,Electores,Votos.emitidos,Elección)#Seleccionamos las columnas de interés
+regional_primera_v2=unique(regional_primera_v1) # Seleccionar los casos unicos
+regional_primera_v2$Elección=as.factor(regional_primera_v2$Elección)
+votosemitidos=aggregate(Votos.emitidos ~ Elección, data = regional_primera_v2, sum)
+electores=aggregate(Electores ~ Elección, data = regional_primera_v2, sum)
+data=cbind(votosemitidos,electores)
+data$PorcentajeParticipacion=data$Votos.emitidos/data$Electores
+
+data2=select(data,-1)
+data3=data2[4:9,]
+data3$Proceso=c("2002","2006","2010","2014","2018","2022")
+library(ggplot2)
+library(gganimate)
+
+grafico=ggplot(data=data3, aes(x=Proceso, y=(PorcentajeParticipacion*100), group=1)) +
+           geom_line(colour = "violet")+
+           geom_point()+labs(y="Porcentaje de participación electoral",x="Proceso Electoral",title = "Participación Electoral en Elecciones Subnacionales",subtitle = "Fuente de datos: ONPE")+theme_minimal()+ylim(70,100)
+grafico
+```
 
