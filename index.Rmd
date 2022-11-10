@@ -1,9 +1,24 @@
 --- 
-title: "Elecciones Subnacionales Perí"
-author: "YOUR NAME HERE"
-date: "`r Sys.Date()`"
+title: "Mitos y Verdades de las Elecciones Subnacionales Perú"
+author: Área de investigación e incidencia de la Escuela de Gobierno y Políticas Públicas
+  - PUCP
+date: 'Equipo de trabajo: Jorge Aragón, Marylía Cruz, Paolo Sanchez, Valeria Pinchi
+  y Cinthya Villanueva'
 site: bookdown::bookdown_site
 ---
 
-# Down the rabbit-hole
+# Presentación
 
+El Área de Incidencia e Investigación de la EGPP- PUCP presenta "Mitos y verdades de las Elecciones Subnacionales en el Perú", la cual tiene como objetivo presentar a detalle los principales mitos sobre los últimos seis procesos electorales subnacionales. 
+
+- Elecciones Regionales y Municipales 2002
+
+- Elecciones Regionales y Municipales 2006
+
+- Elecciones Regionales y Municipales 2010
+
+- Elecciones Regionales y Municipales 2014
+
+- Elecciones Regionales y Municipales 2018
+
+- Elecciones Regionales y Municipales 2022
