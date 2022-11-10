@@ -3,6 +3,6 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">SHORT TITLE HERE</a></li>
+        <li><a href="./">Mitos y verdades de las Elecciones Subnacionales en el Perú</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
